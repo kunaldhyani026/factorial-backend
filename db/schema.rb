@@ -57,9 +57,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_28_175328) do
     t.string "name"
     t.integer "customizable_id", null: false
     t.float "price", default: 0.0
+    t.boolean "stock", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customizable_id"], name: "index_customizable_options_on_customizable_id"
+  end
+
+  create_table "customizable_options_pricing_groups", id: false, force: :cascade do |t|
+    t.integer "pricing_group_id", null: false
+    t.integer "customizable_option_id", null: false
+    t.index ["customizable_option_id", "pricing_group_id"], name: "index_customizable_option_id_pricing_group_id"
+    t.index ["pricing_group_id", "customizable_option_id"], name: "uniq_pricing_group_id_customizable_option_id", unique: true
+  end
+
+  create_table "customizable_options_products", id: false, force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "customizable_option_id", null: false
+    t.index ["customizable_option_id", "product_id"], name: "index_customizable_option_id_product_id"
+    t.index ["product_id", "customizable_option_id"], name: "uniq_product_id_customizable_option_id", unique: true
   end
 
   create_table "customizables", force: :cascade do |t|
@@ -74,13 +89,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_28_175328) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pricing_groups_customizable_options", id: false, force: :cascade do |t|
-    t.integer "pricing_group_id", null: false
-    t.integer "customizable_option_id", null: false
-    t.index ["customizable_option_id", "pricing_group_id"], name: "index_customizable_option_id_pricing_group_id"
-    t.index ["pricing_group_id", "customizable_option_id"], name: "uniq_pricing_group_id_customizable_option_id", unique: true
-  end
-
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -88,22 +96,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_28_175328) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "products_customizable_options", id: false, force: :cascade do |t|
-    t.integer "product_id", null: false
-    t.integer "customizable_option_id", null: false
-    t.index ["customizable_option_id", "product_id"], name: "index_customizable_option_id_product_id"
-    t.index ["product_id", "customizable_option_id"], name: "uniq_product_id_customizable_option_id", unique: true
-  end
-
   create_table "prohibitions", force: :cascade do |t|
-    t.integer "customizable_option_id", null: false
-    t.integer "prohibited_customizable_option_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "customizable_option_id"
+    t.integer "prohibited_customizable_option_id"
     t.index ["customizable_option_id", "prohibited_customizable_option_id"], name: "index_prohibitions_on_customizable_and_prohibited", unique: true
-    t.index ["customizable_option_id"], name: "index_prohibitions_on_customizable_option_id"
     t.index ["prohibited_customizable_option_id", "customizable_option_id"], name: "index_prohibitions_on_prohibited_and_customizable", unique: true
-    t.index ["prohibited_customizable_option_id"], name: "index_prohibitions_on_prohibited_customizable_option_id"
   end
 
   add_foreign_key "cart_items", "carts"
@@ -112,6 +109,4 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_28_175328) do
   add_foreign_key "customizable_option_price_by_groups", "customizable_options"
   add_foreign_key "customizable_option_price_by_groups", "pricing_groups"
   add_foreign_key "customizable_options", "customizables"
-  add_foreign_key "prohibitions", "customizable_options"
-  add_foreign_key "prohibitions", "prohibited_customizable_options"
 end
