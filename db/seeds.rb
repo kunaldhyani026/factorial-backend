@@ -6,14 +6,15 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-CustomizableOptionPriceByGroup.destroy_all
-CustomizableOption.destroy_all
-Customizable.destroy_all
-Product.destroy_all
-Customer.destroy_all
-PricingGroup.destroy_all
-CartItem.destroy_all
-Cart.destroy_all
+# Customer.destroy_all
+# Product.destroy_all
+#
+# Customizable.destroy_all
+# CustomizableOption.destroy_all
+# PricingGroup.destroy_all
+# CustomizableOptionPriceByGroup.destroy_all
+# Cart.destroy_all
+# CartItem.destroy_all
 
 # customers
 kunal = Customer.find_or_create_by(name: 'Kunal Dhyani', email: 'kunaldhyani@email.com')
@@ -53,17 +54,17 @@ rim_color.customizable_options.find_by_name('Red').prohibited_combinations << wh
 # Pricing Groups
 full_suspension_frame_group = PricingGroup.create(name: 'Full Suspension Frame Group')
 diamond_frame_group = PricingGroup.create(name: 'Diamond Group')
-summer_sale = PricingGroup.create(name: 'Summer Sale')
+special_price_group = PricingGroup.create(name: 'Special Pricing Group')
 
 # Pricing Group Customizable Options
 full_suspension_frame_group.customizable_options << CustomizableOption.find_by_name('Full Suspension')
 diamond_frame_group.customizable_options << CustomizableOption.find_by_name('Diamond')
-summer_sale.customizable_options << [CustomizableOption.find_by_name('step-through'), CustomizableOption.find_by_name('Road Wheels')]
+special_price_group.customizable_options << [CustomizableOption.find_by_name('step-through'), CustomizableOption.find_by_name('Road Wheels')]
 
 # CustomizableOptions Pricing by Group
 CustomizableOption.find_by_name('Matte').customizable_option_price_by_groups << CustomizableOptionPriceByGroup.create({price: 50, pricing_group_id: full_suspension_frame_group.id})
 CustomizableOption.find_by_name('Matte').customizable_option_price_by_groups << CustomizableOptionPriceByGroup.create({price: 35, pricing_group_id: diamond_frame_group.id})
-CustomizableOption.find_by_name('Shiny').customizable_option_price_by_groups << CustomizableOptionPriceByGroup.create({price: 10, pricing_group_id: summer_sale.id})
+CustomizableOption.find_by_name('Shiny').customizable_option_price_by_groups << CustomizableOptionPriceByGroup.create({price: 40, pricing_group_id: special_price_group.id})
 
 # Add customizable_options to products
 bike.customizable_options = CustomizableOption.where.not(name: 'Non-Rusty Tiny Wheels')
