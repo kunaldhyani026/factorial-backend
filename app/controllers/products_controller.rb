@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
   def create
     product = Product.new(name: params['product_name'], description: params['product_description'])
     product.customizable_option_ids = params['customizable_options']
-    product.save
+    product.save!
 
     render json: product, status: :created
   end

@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resources :carts, only: [] do
     post 'add_item', on: :collection
   end
-  resources :customizable_options, only: [:index]
+  resources :customizable_options
 end

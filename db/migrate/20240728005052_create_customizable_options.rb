@@ -8,5 +8,7 @@ class CreateCustomizableOptions < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :customizable_options, [:customizable_id, :name], unique: true
   end
 end

@@ -14,6 +14,10 @@ class CustomizableOption < ApplicationRecord
   has_many :pricing_groups, through: :customizable_option_price_by_groups
   has_and_belongs_to_many :pricing_groups
 
+  validates :name, presence: true
+  validates :customizable_id, presence: true
+  validates :name, uniqueness: { scope: :customizable_id, message: 'has already been taken for this customizable' }
+
   def customizable_name
     customizable.name
   end
