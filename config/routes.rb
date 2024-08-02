@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     post 'add_item', on: :collection
   end
   resources :customizable_options
+  resources :pricing_groups
 end
