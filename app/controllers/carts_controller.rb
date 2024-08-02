@@ -1,6 +1,10 @@
 class CartsController < ApplicationController
   before_action :set_cart
 
+  def index
+    @cart
+  end
+
   def add_item
     product = Product.find(params[:product_id])
     cart_item = @cart.cart_items.new(product: product)
