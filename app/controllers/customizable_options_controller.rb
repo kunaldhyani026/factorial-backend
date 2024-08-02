@@ -9,6 +9,11 @@ class CustomizableOptionsController < ApplicationController
     option = CustomizableOption.create!(name: params[:name], price: params[:price], stock: params[:in_stock], customizable_id: params[:customizable_id])
     render json: option, status: :created
   end
+
+  def update
+    customizable_option = CustomizableOption.find(params[:id])
+    customizable_option.update!(price: params[:price])
+  end
 end
 
 

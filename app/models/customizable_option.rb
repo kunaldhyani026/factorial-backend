@@ -16,6 +16,7 @@ class CustomizableOption < ApplicationRecord
 
   validates :name, presence: true
   validates :customizable_id, presence: true
+  validates :price, presence: true
   validates :name, uniqueness: { scope: :customizable_id, message: 'has already been taken for this customizable' }
 
   def customizable_name

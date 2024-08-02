@@ -12,6 +12,6 @@ end
 
 json.customizable_options do
   json.array! @customizable_options do |customizable_option|
-    json.extract! customizable_option, :id, :customizable_id, :name
+    json.extract! customizable_option, :id, :customizable_id, :name, :price, :stock
   end
 end
