@@ -6,7 +6,9 @@ class CustomizableOptionsController < ApplicationController
   end
 
   def create
-    option = CustomizableOption.create!(name: params[:name], price: params[:price], stock: params[:in_stock], customizable_id: params[:customizable_id])
+    option = CustomizableOption.new(name: params[:name], price: params[:price], stock: params[:in_stock], customizable_id: params[:customizable_id])
+    option.product_ids = params[:product_ids]
+    option.save!
     render json: option, status: :created
   end
 
