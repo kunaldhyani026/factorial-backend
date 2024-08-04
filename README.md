@@ -190,7 +190,7 @@ Make sure you have Docker installed on your system. You can download and install
 
 - #### The Home Page
   This page shows all the products available for user to purchase.
-  - **API**
+  - ##### API
     - Request : GET - /products
     - Response :
       ```
@@ -207,13 +207,13 @@ Make sure you have Docker installed on your system. You can download and install
           }
       ]
       ```
-  - **UI**
+  - ##### UI
     ![image](https://github.com/user-attachments/assets/568b0482-5d0c-46f8-a5ea-859c69b73abe)
       
 - #### The Product Page
   Upon click on individual product from home page, the product page gets loaded. This page has all the info related to available customizables, their customizable_options, stock availability and prohibited combinations.
   
-  - **API**
+  - ##### API
     - Request : GET - /products/:id (/products/1)
     - Response :
       ```
@@ -350,7 +350,7 @@ Make sure you have Docker installed on your system. You can download and install
           }
       }
       ```
-  - **UI**
+  - ##### UI
     ![image](https://github.com/user-attachments/assets/28a1e785-c89a-4f80-9063-392eedffa3dd)
     
     Prohibited Combination (Mountain Wheels only allowed with Full Suspension Frame)             |  Out of stock (Black Rim Color)
@@ -362,7 +362,7 @@ Make sure you have Docker installed on your system. You can download and install
 
   Eg : Suppose user made following selections for **Bicycle customizable_options** :
   ``` Frame Type :  { id: 1, name: Full Suspension}, Frame Finish : { id: 4, name: Matte} , Wheels : { id: 7, name: Mountain Wheels} , Rim Color : { id: 10, name: Red }, Chain : { id: 13, name: Single-speed chain} ```
-  - **API**
+  - ##### API
     - Request : POST - /carts/add_item
     - Payload :
       ```
@@ -375,28 +375,28 @@ Make sure you have Docker installed on your system. You can download and install
       ```
         { "cart_item_id" : 1}
       ```
-    - Following things are persisted in the database
-      - `carts`
-        | id | total | customer_id | created_at                  | updated_at                  |
-        |----|-------|-------------|-----------------------------|-----------------------------|
-        | 1  | 710.0 | 1           | 2024-08-04 11:50:54.293513  | 2024-08-04 11:50:54.514518  |
-      - `cart_items`
-        | id | cart_id | product_id | created_at                  | updated_at                  |
-        |----|---------|------------|-----------------------------|-----------------------------|
-        | 1  | 1       | 1          | 2024-08-04 11:50:54.396087  | 2024-08-04 11:50:54.396087  |
-      - `cart_items_customizable_options`
-        | cart_item_id | customizable_option_id |
-        |--------------|------------------------|
-        | 1            | 1                      |
-        | 1            | 4                      |
-        | 1            | 7                      |
-        | 1            | 10                     |
-        | 1            | 13                     |
+  - ##### Things persisted in database
+    - `carts`
+      | id | total | customer_id | created_at                  | updated_at                  |
+      |----|-------|-------------|-----------------------------|-----------------------------|
+      | 1  | 710.0 | 1           | 2024-08-04 11:50:54.293513  | 2024-08-04 11:50:54.514518  |
+    - `cart_items`
+      | id | cart_id | product_id | created_at                  | updated_at                  |
+      |----|---------|------------|-----------------------------|-----------------------------|
+      | 1  | 1       | 1          | 2024-08-04 11:50:54.396087  | 2024-08-04 11:50:54.396087  |
+    - `cart_items_customizable_options`
+      | cart_item_id | customizable_option_id |
+      |--------------|------------------------|
+      | 1            | 1                      |
+      | 1            | 4                      |
+      | 1            | 7                      |
+      | 1            | 10                     |
+      | 1            | 13                     |
 
-      - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
+    - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
 
 - #### View Cart
-  - **API**
+  - ##### API
     - Authentication : Uses a JWT token for user info, but to keep things light-weight for now server is simplified with a hardcoded customer_id: 1 for all requests.
     - Request : GET - /carts
     - Response :
@@ -481,7 +481,7 @@ Make sure you have Docker installed on your system. You can download and install
           }
       }
       ```
-  - **UI**
+  - ##### UI
     
     Notice how `Matte Finish` Price is `40 Euros` for `Diamond Frame` and `50 Euros` for `Full Suspension Frame`. The API calculates the cost considering all the pricing (individual as well as the special pricing based on combinations of other selection.) In case of multiple special pricing applicable on a option, the one with the max price is considered so as Marcus is benefitted.
     
@@ -493,13 +493,13 @@ Make sure you have Docker installed on your system. You can download and install
 ###  The description of the main workflows from the administration part of the website, where Marcus configures the store
    Currently to keep things light-weight, no authentication and authorization is setup. Going forward we can it up, so that only authorized users can access admin portal.
   - #### Admin Landing Page
-    - UI
+    - ##### UI
       ![image](https://github.com/user-attachments/assets/9557c25a-a8d5-4e0b-aa19-26a0367a33eb)
 
   - #### Creation of new product
     Upon clicking on `Add new Product` from admin home page, following page is loaded where admin can add a new product for its store along with what all customizables that can be done on that product.
 
-    - **API** (to drive the UI)
+    - ##### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -638,16 +638,16 @@ Make sure you have Docker installed on your system. You can download and install
             ]
         }
         ```
-    - **UI**
+    - ##### UI
       UI             |  UI Validations
       :-------------------------:|:-------------------------:
       ![image](https://github.com/user-attachments/assets/d98e3d77-def2-489f-871d-92b9e985c666) |  ![image](https://github.com/user-attachments/assets/69cd87f4-b450-43c1-8139-4b2080db87f8)
 
-    - **Add Product button click**
+    - ##### Add Product button click
       
       Suppose admin added a new product `Golf Cart`. And only customizable for these are Wheels and Chains.
       User added - `Golf Cart, allowed customizable_options -  Wheels : { id: 9, name: Non-Rusty Tiny Wheels }, Chain : { id: 13, name: Single-speed chain}, {id: 14, naem: 8-speed chain}`
-      - API
+      - ###### API
         - Request : POST - /products
         - Payload :
           ```
@@ -667,7 +667,7 @@ Make sure you have Docker installed on your system. You can download and install
                 "updated_at": "2024-08-04T13:33:30.002Z"
             }
           ```
-      - Following things are persisted in the database
+      - ###### Things persisted in the database
         - `products` table
           | id | name       | description              | created_at                  | updated_at                  |
           |----|------------|--------------------------|-----------------------------|-----------------------------|
@@ -690,7 +690,7 @@ Make sure you have Docker installed on your system. You can download and install
   - #### Addition of a new part choice
     Upon clicking on `Add new Customizable Option` from admin home page, following page is loaded where admin can add a customizable option, along with mapping that to which Product(s) this option should be allowed.
 
-    - **API** (to drive the UI)
+    - ##### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -834,69 +834,69 @@ Make sure you have Docker installed on your system. You can download and install
         }
         ```
   
-      - **UI**
-        UI             |  UI Validations
-        :-------------------------:|:-------------------------:
-        ![image](https://github.com/user-attachments/assets/250693d1-c80a-429c-8f25-f3003971533a) | ![image](https://github.com/user-attachments/assets/8385558f-6f27-4898-9aae-259a410cec25)
+    - ##### UI
+      UI             |  UI Validations
+      :-------------------------:|:-------------------------:
+      ![image](https://github.com/user-attachments/assets/250693d1-c80a-429c-8f25-f3003971533a) | ![image](https://github.com/user-attachments/assets/8385558f-6f27-4898-9aae-259a410cec25)
   
-      - **Add Option button click**
-      
-        Suppose admin added a new customizable option `Tiny Grass Wheels` for the `Wheels` customizable, Price : 400 Euro, In Stock : No.
-  
-        Admin also selected only applicable products - `Golf Cart`. This is obvious as admin don't want a `Tiny Grass Wheels` customizable option available for `Bicycle's Wheels customization`.
-  
-        User added - `customizable_option : 'Tiny Grass Wheels' for customizable : {id: 3, name: Wheels}, Price: 400 Euros, Stock Status: False, Applicable Products : {id: 3, name: Golf Cart}`
-  
-        - API
-          - Request : POST - /customizable_options
-          - Payload :
-            ```
+    - ##### Add Option button click
+    
+      Suppose admin added a new customizable option `Tiny Grass Wheels` for the `Wheels` customizable, Price : 400 Euro, In Stock : No.
+
+      Admin also selected only applicable products - `Golf Cart`. This is obvious as admin don't want a `Tiny Grass Wheels` customizable option available for `Bicycle's Wheels customization`.
+
+      User added - `customizable_option : 'Tiny Grass Wheels' for customizable : {id: 3, name: Wheels}, Price: 400 Euros, Stock Status: False, Applicable Products : {id: 3, name: Golf Cart}`
+
+      - ###### API
+        - Request : POST - /customizable_options
+        - Payload :
+          ```
+          {
+            "name": "Tiny Grass Wheels",
+            "price" : "400",
+            "in_stock" : false,
+            "customizable_id" : 3,
+            "product_ids": [3]
+          }
+          ```
+        - Response : 201 Created
+          ```
             {
-              "name": "Tiny Grass Wheels",
-              "price" : "400",
-              "in_stock" : false,
-              "customizable_id" : 3,
-              "product_ids": [3]
+                "id": 15,
+                "name": "Tiny Grass Wheels",
+                "customizable_id": 3,
+                "price": 400.0,
+                "stock": false,
+                "created_at": "2024-08-04T15:06:53.704Z",
+                "updated_at": "2024-08-04T15:06:53.704Z"
             }
-            ```
-          - Response : 201 Created
-            ```
-              {
-                  "id": 15,
-                  "name": "Tiny Grass Wheels",
-                  "customizable_id": 3,
-                  "price": 400.0,
-                  "stock": false,
-                  "created_at": "2024-08-04T15:06:53.704Z",
-                  "updated_at": "2024-08-04T15:06:53.704Z"
-              }
-            ```
-          - Following things are persisted in the database
-            - `customizable_options` table
-              | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
-              |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
-              | .. | .....           | .....           | ..    | ..    | .........                   | ......existing entries      |
-              | 15 | Tiny Grass Wheels| 3              | 400.0 | false | 2024-08-04 15:06:53.704276  | 2024-08-04 15:06:53.704276  |
-  
-            - `products_customizable_options` table
-              | product_id | customizable_option_id |
-              |------------|-------------------------|
-              | .....      | ...........             |
-              | .....      | .....existing entries   |
-              | 3 //existing          | 9 //existing                       |
-              | 3 //existing          | 13 //existing                      |
-              | 3 //existing         | 14  //existing                    |
-              | 3          | 15                      |
-  
-            - This is how product page UI looks like now
-              Bicycle (Tiny Grass Wheels not available under Wheels customizable options)             |  Golf Cart (Tiny Grass Wheels available under Wheels customizable )
-              :-------------------------:|:-------------------------:
-              ![Screenshot (360)](https://github.com/user-attachments/assets/29c98fa6-971f-4d6b-976e-45a88bad5d22) | ![Screenshot (361)](https://github.com/user-attachments/assets/a098634e-819c-4460-ae40-71619d0152ef)
+          ```
+      - ###### Things persisted in the database
+        - `customizable_options` table
+          | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
+          |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
+          | .. | .....           | .....           | ..    | ..    | .........                   | ......existing entries      |
+          | 15 | Tiny Grass Wheels| 3              | 400.0 | false | 2024-08-04 15:06:53.704276  | 2024-08-04 15:06:53.704276  |
+
+        - `products_customizable_options` table
+          | product_id | customizable_option_id |
+          |------------|-------------------------|
+          | .....      | ...........             |
+          | .....      | .....existing entries   |
+          | 3 //existing          | 9 //existing                       |
+          | 3 //existing          | 13 //existing                      |
+          | 3 //existing         | 14  //existing                    |
+          | 3          | 15                      |
+
+        - This is how product page UI looks like now
+          Bicycle (Tiny Grass Wheels not available under Wheels customizable options)             |  Golf Cart (Tiny Grass Wheels available under Wheels customizable )
+          :-------------------------:|:-------------------------:
+          ![Screenshot (360)](https://github.com/user-attachments/assets/29c98fa6-971f-4d6b-976e-45a88bad5d22) | ![Screenshot (361)](https://github.com/user-attachments/assets/a098634e-819c-4460-ae40-71619d0152ef)
 
 
   - #### Setting Up Prices
     Upon clicking on `Modify Customizable Options` from admin home page, following page is loaded where admin can modify a customizable option or define special pricing based on customizable option combinations.
-    - **API** (to drive the UI)
+    - ##### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -1047,74 +1047,74 @@ Make sure you have Docker installed on your system. You can download and install
         }
         ```
     
-    - **UI**
+    - ##### UI
       ![image](https://github.com/user-attachments/assets/c1dae955-da69-43fa-9322-c41fba083cf3)
 
-      - **Modify button Click**
-        - UI
-          ![image](https://github.com/user-attachments/assets/8b4a8d00-851a-443f-958b-85f56c1c410e)
-        
-        From this UI, Suppose Admin changed the price of Full Suspension from `300 Euro` to `500 Euro`.
+    - ##### Modify button Click
+      - ###### UI
+        ![image](https://github.com/user-attachments/assets/8b4a8d00-851a-443f-958b-85f56c1c410e)
+      
+      From this UI, Suppose Admin changed the price of Full Suspension from `300 Euro` to `500 Euro`.
 
-        - API
-          - Request : PATCH - /customizable_options/:id  (/customizable_options/1)
-          - Payload : ` { price : 500 } `
-          - Response : 204 No Content
-          - Following things are persisted in the database
-            - `customizable_options` table
-              | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
-              |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
-              | 1  | Full Suspension | 1               | 300.0 --> 500.00 | true | 2024-08-04 11:22:27.329730  | 2024-08-04 16:09:07.336495  |
+      - ###### API
+        - Request : PATCH - /customizable_options/:id  (/customizable_options/1)
+        - Payload : ` { price : 500 } `
+        - Response : 204 No Content
+
+      - ###### Things persisted in the database
+        - `customizable_options` table
+          | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
+          |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
+          | 1  | Full Suspension | 1               | 300.0 --> 500.00 | true | 2024-08-04 11:22:27.329730  | 2024-08-04 16:09:07.336495  |
             
 
-      - **Add Special Price Button click**
-        - UI
-          ![image](https://github.com/user-attachments/assets/12c9f523-ff5e-4110-a3c3-39a5656e6d33)
-
-
+    - ##### Add Special Price Button click
+      - ###### UI
+        ![image](https://github.com/user-attachments/assets/12c9f523-ff5e-4110-a3c3-39a5656e6d33)
 
         From this UI, suppose admin added a special price of `60 Euros` for customizable option `Red Rim Color {id: 10}` when other customizable option combinations are - `Diamond Frame Type {id: 2}` and `Shiny Frame Finish {id: 5}`
-     
-          <img src="https://github.com/user-attachments/assets/5aba0983-67d1-4cf1-8b11-45d984c2051a" width="800" height="500">
+   
+        <img src="https://github.com/user-attachments/assets/5aba0983-67d1-4cf1-8b11-45d984c2051a" width="800" height="500">
 
-        - API
-          - Request : POST - /pricing_groups
-          - Payload :
-            ```
-              {
-                "pricing_group_name" : "Red Rim Color Special Price",
-                "customizable_option_id": 10
-                "price": 60,
-                "customizable_option_combinations": [2, 5]
-              }
-            ```
-          - Response : 204 No Content
+      - ###### API
+        - Request : POST - /pricing_groups
+        - Payload :
+          ```
+            {
+              "pricing_group_name" : "Red Rim Color Special Price",
+              "customizable_option_id": 10
+              "price": 60,
+              "customizable_option_combinations": [2, 5]
+            }
+          ```
+        - Response : 204 No Content
 
-        - Following things are persisted in the database
-          
-          - `pricing_groups` table
-            | id | name                     | created_at                  | updated_at                  |
-            |----|--------------------------|-----------------------------|-----------------------------|
-            | 3  | Red Rim Color Special Price | 2024-08-04 16:57:03.457318  | 2024-08-04 16:57:03.457318  |
+      - ###### Things persisted in the database
+        
+        - `pricing_groups` table
+          | id | name                     | created_at                  | updated_at                  |
+          |----|--------------------------|-----------------------------|-----------------------------|
+          | 3  | Red Rim Color Special Price | 2024-08-04 16:57:03.457318  | 2024-08-04 16:57:03.457318  |
 
-          - `pricing_groups_customizable_options` table
-            | pricing_group_id | customizable_option_id |
-            |------------------|-------------------------|
-            | 3                | 2                       |
-            | 3                | 5                       |
+        - `pricing_groups_customizable_options` table
+          | pricing_group_id | customizable_option_id |
+          |------------------|-------------------------|
+          | 3                | 2                       |
+          | 3                | 5                       |
 
-          - `customizable_option_price_by_groups` table
-            | id | customizable_option_id | pricing_group_id | price | created_at                  | updated_at                  |
-            |----|-------------------------|------------------|-------|-----------------------------|-----------------------------|
-            | 3  | 10                      | 3                | 60.00 | 2024-08-04 16:57:03.489330  | 2024-08-04 16:57:03.489330  |
+        - `customizable_option_price_by_groups` table
+          | id | customizable_option_id | pricing_group_id | price | created_at                  | updated_at                  |
+          |----|-------------------------|------------------|-------|-----------------------------|-----------------------------|
+          | 3  | 10                      | 3                | 60.00 | 2024-08-04 16:57:03.489330  | 2024-08-04 16:57:03.489330  |
 
 
 
-        - **Lets test this new pricing rule** - `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
-       
+      - ###### Lets test this new pricing rule
+        `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
+
         Notice how the price for `Red Rim Color` is `10 Euros` for the first two customized bicycle cart_items, **but for the third customized bicycle**, the price for `Red Rim Color` is `60 Euros` because the other two combinations are `Diamond Frame Type` and `Shiny Frame Finish`, which means our new pricing rule was applied.
-          
-          ![image](https://github.com/user-attachments/assets/0c271b5e-afb6-43ae-81d1-ed117b2330fd)
+        
+        ![image](https://github.com/user-attachments/assets/0c271b5e-afb6-43ae-81d1-ed117b2330fd)
 
 
 
