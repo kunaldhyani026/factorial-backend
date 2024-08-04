@@ -1117,24 +1117,38 @@ Make sure you have Docker installed on your system. You can download and install
         ![image](https://github.com/user-attachments/assets/0c271b5e-afb6-43ae-81d1-ed117b2330fd)
 
 
+## Ruby on Rails - Key Classes
+### Models
+  - Cart
+  - CartItem
+  - Customer
+  - Product
+  - Customizable
+  - CustomizableOption
+  - PricingGroup
+  - CustomizableOptionPriceByGroup
 
+### Controllers
+  - carts_controller
 
+    Responsible for mantaining apis for cart related action (add item, view cart, etc)
+  - products_controller
 
+    Responsible for managing apis for product related actions (get all products, get specific product customizable info, add new product)
+  - customizable_options_controller
 
-  
+    Responsible for managing apis for customizable_options related actions (get all customizable_options, add create option, update an option [price])
+  - pricing_groups_controller
 
-      
-
-## Optimisations
-to-do
-
-## Configurations
-to-do
-
-## Observations, Assumptions and Points
-to-do
-
-## Suggestions and Future Iterations
-to-do audit_trails
+    Responsible for managing apis for special pricing related actions (create special pricing for an option based on option combinations)
+    
+## Observations, Assumptions, Points for future iterations
+  To keep things light-weight and simple for now, following points are kept to be picked in future iterations - 
+  - Authentication and authorization needs to be added. We can add jwt token authentication for all the APIs. Server will decode the token and get the user info accessing the website. User Authorization layer can also be added to sepcify access-levels.
+  - Params Validation needs to be added. We will definitely add params validation for all API requests to enhance security of the application.
+  - RSpec is used for adding test cases related to APIs. Going forward we should continue adding more specs to keep the API test suite robust.
+  - Audit trails needs to be maintained. In future iterations, we will definitely maintain audit_trails to keep the track of user/admin actions , especially with admin write operations.
+  - Robust error handling will be added in APIs, so user is notified with appropriate error message for different kinds of backend errors (4xx, 5xx, etc).
 
 ## Testing
+ - RSpec
