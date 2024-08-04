@@ -25,6 +25,8 @@ Make sure you have Docker installed on your system. You can download and install
 [View in Editor](https://dbdiagram.io/d/factorial-backend-erd-66a654028b4bb5230e8dd8fb)
 ![factorial-backend-erd](https://github.com/user-attachments/assets/4d7f3867-e812-4d2d-9ef7-ae20e5a9bda8)
 
+<hr/>
+
 ### Deep Dive in Data Model
 
 #### `customers` Table
@@ -181,6 +183,8 @@ Make sure you have Docker installed on your system. You can download and install
   - `customizable_option` (belongs to `customizable_options`).
   - `pricing_group` (belongs to `pricing_groups`).
 
+<br>
+<hr/>
 
 ### Description of main user actions
 
@@ -483,6 +487,8 @@ Make sure you have Docker installed on your system. You can download and install
     
     ![image](https://github.com/user-attachments/assets/c051a298-edb4-4412-9bdd-5c6f36839036)
 
+<br>
+<hr/>
 
 ###  The description of the main workflows from the administration part of the website, where Marcus configures the store
    Currently to keep things light-weight, no authentication and authorization is setup. Going forward we can it up, so that only authorized users can access admin portal.
