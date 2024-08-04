@@ -681,221 +681,441 @@ Make sure you have Docker installed on your system. You can download and install
         - This is how the Home page UI looks like now -
           ![image](https://github.com/user-attachments/assets/0c659dd5-6c02-40f7-8e4f-c467f2d79c18)
 
-- #### Addition of a new part choice
-  Upon clicking on `Add new Customizable Option` from admin home page, following page is loaded where admin can add a customizable option, along with mapping that to which Product(s) this option should be allowed.
+  - #### Addition of a new part choice
+    Upon clicking on `Add new Customizable Option` from admin home page, following page is loaded where admin can add a customizable option, along with mapping that to which Product(s) this option should be allowed.
 
-  - **API** (to drive the UI)
-    - Request : GET - /customizable_options
-    - Response :
-      ```
-        {
-          "products": [
-              {
-                  "id": 1,
-                  "name": "Bicycle"
-              },
-              {
-                  "id": 2,
-                  "name": "Surfboard"
-              },
-              {
-                  "id": 3,
-                  "name": "Golf Cart"
-              }
-          ],
-          "customizables": [
-              {
-                  "id": 1,
-                  "name": "Frame Type"
-              },
-              {
-                  "id": 2,
-                  "name": "Frame Finish"
-              },
-              {
-                  "id": 3,
-                  "name": "Wheels"
-              },
-              {
-                  "id": 4,
-                  "name": "Rim Color"
-              },
-              {
-                  "id": 5,
-                  "name": "Chain"
-              }
-          ],
-          "customizable_options": [
-              {
-                  "id": 1,
-                  "customizable_id": 1,
-                  "name": "Full Suspension",
-                  "price": 300.0,
-                  "stock": true
-              },
-              {
-                  "id": 2,
-                  "customizable_id": 1,
-                  "name": "Diamond",
-                  "price": 150.0,
-                  "stock": true
-              },
-              {
-                  "id": 3,
-                  "customizable_id": 1,
-                  "name": "step-through",
-                  "price": 100.0,
-                  "stock": true
-              },
-              {
-                  "id": 4,
-                  "customizable_id": 2,
-                  "name": "Matte",
-                  "price": 40.0,
-                  "stock": true
-              },
-              {
-                  "id": 5,
-                  "customizable_id": 2,
-                  "name": "Shiny",
-                  "price": 30.0,
-                  "stock": true
-              },
-              {
-                  "id": 6,
-                  "customizable_id": 3,
-                  "name": "Road Wheels",
-                  "price": 100.0,
-                  "stock": true
-              },
-              {
-                  "id": 7,
-                  "customizable_id": 3,
-                  "name": "Mountain Wheels",
-                  "price": 200.0,
-                  "stock": true
-              },
-              {
-                  "id": 8,
-                  "customizable_id": 3,
-                  "name": "Fat Bike Wheels",
-                  "price": 300.0,
-                  "stock": true
-              },
-              {
-                  "id": 9,
-                  "customizable_id": 3,
-                  "name": "Non-Rusty Tiny Wheels",
-                  "price": 120.0,
-                  "stock": true
-              },
-              {
-                  "id": 10,
-                  "customizable_id": 4,
-                  "name": "Red",
-                  "price": 10.0,
-                  "stock": true
-              },
-              {
-                  "id": 11,
-                  "customizable_id": 4,
-                  "name": "Blue",
-                  "price": 20.0,
-                  "stock": true
-              },
-              {
-                  "id": 12,
-                  "customizable_id": 4,
-                  "name": "Black",
-                  "price": 5.0,
-                  "stock": false
-              },
-              {
-                  "id": 13,
-                  "customizable_id": 5,
-                  "name": "Single-speed chain",
-                  "price": 150.0,
-                  "stock": true
-              },
-              {
-                  "id": 14,
-                  "customizable_id": 5,
-                  "name": "8-speed chain",
-                  "price": 400.0,
-                  "stock": true
-              }
-          ]
-      }
-      ```
-
-    - **UI**
-      UI             |  UI Validations
-      :-------------------------:|:-------------------------:
-      ![image](https://github.com/user-attachments/assets/250693d1-c80a-429c-8f25-f3003971533a) | ![image](https://github.com/user-attachments/assets/8385558f-6f27-4898-9aae-259a410cec25)
-
-    - **Add Option button click**
-    
-      Suppose admin added a new customizable option `Tiny Grass Wheels` for the `Wheels` customizable, Price : 400 Euro, In Stock : No.
-
-      Admin also selected only applicable products - `Golf Cart`. This is obvious as admin don't want a `Tiny Grass Wheels` customizable option available for `Bicycle's Wheels customization`.
-
-      User added - `customizable_option : 'Tiny Grass Wheels' for customizable : {id: 3, name: Wheels}, Price: 400 Euros, Stock Status: False, Applicable Products : {id: 3, name: Golf Cart}`
-
-      - API
-        - Request : POST - /customizable_options
-        - Payload :
-          ```
+    - **API** (to drive the UI)
+      - Request : GET - /customizable_options
+      - Response :
+        ```
           {
-            "name": "Tiny Grass Wheels",
-            "price" : "400",
-            "in_stock" : false,
-            "customizable_id" : 3,
-            "product_ids": [3]
-          }
-          ```
-        - Response : 201 Created
-          ```
+            "products": [
+                {
+                    "id": 1,
+                    "name": "Bicycle"
+                },
+                {
+                    "id": 2,
+                    "name": "Surfboard"
+                },
+                {
+                    "id": 3,
+                    "name": "Golf Cart"
+                }
+            ],
+            "customizables": [
+                {
+                    "id": 1,
+                    "name": "Frame Type"
+                },
+                {
+                    "id": 2,
+                    "name": "Frame Finish"
+                },
+                {
+                    "id": 3,
+                    "name": "Wheels"
+                },
+                {
+                    "id": 4,
+                    "name": "Rim Color"
+                },
+                {
+                    "id": 5,
+                    "name": "Chain"
+                }
+            ],
+            "customizable_options": [
+                {
+                    "id": 1,
+                    "customizable_id": 1,
+                    "name": "Full Suspension",
+                    "price": 300.0,
+                    "stock": true
+                },
+                {
+                    "id": 2,
+                    "customizable_id": 1,
+                    "name": "Diamond",
+                    "price": 150.0,
+                    "stock": true
+                },
+                {
+                    "id": 3,
+                    "customizable_id": 1,
+                    "name": "step-through",
+                    "price": 100.0,
+                    "stock": true
+                },
+                {
+                    "id": 4,
+                    "customizable_id": 2,
+                    "name": "Matte",
+                    "price": 40.0,
+                    "stock": true
+                },
+                {
+                    "id": 5,
+                    "customizable_id": 2,
+                    "name": "Shiny",
+                    "price": 30.0,
+                    "stock": true
+                },
+                {
+                    "id": 6,
+                    "customizable_id": 3,
+                    "name": "Road Wheels",
+                    "price": 100.0,
+                    "stock": true
+                },
+                {
+                    "id": 7,
+                    "customizable_id": 3,
+                    "name": "Mountain Wheels",
+                    "price": 200.0,
+                    "stock": true
+                },
+                {
+                    "id": 8,
+                    "customizable_id": 3,
+                    "name": "Fat Bike Wheels",
+                    "price": 300.0,
+                    "stock": true
+                },
+                {
+                    "id": 9,
+                    "customizable_id": 3,
+                    "name": "Non-Rusty Tiny Wheels",
+                    "price": 120.0,
+                    "stock": true
+                },
+                {
+                    "id": 10,
+                    "customizable_id": 4,
+                    "name": "Red",
+                    "price": 10.0,
+                    "stock": true
+                },
+                {
+                    "id": 11,
+                    "customizable_id": 4,
+                    "name": "Blue",
+                    "price": 20.0,
+                    "stock": true
+                },
+                {
+                    "id": 12,
+                    "customizable_id": 4,
+                    "name": "Black",
+                    "price": 5.0,
+                    "stock": false
+                },
+                {
+                    "id": 13,
+                    "customizable_id": 5,
+                    "name": "Single-speed chain",
+                    "price": 150.0,
+                    "stock": true
+                },
+                {
+                    "id": 14,
+                    "customizable_id": 5,
+                    "name": "8-speed chain",
+                    "price": 400.0,
+                    "stock": true
+                }
+            ]
+        }
+        ```
+  
+      - **UI**
+        UI             |  UI Validations
+        :-------------------------:|:-------------------------:
+        ![image](https://github.com/user-attachments/assets/250693d1-c80a-429c-8f25-f3003971533a) | ![image](https://github.com/user-attachments/assets/8385558f-6f27-4898-9aae-259a410cec25)
+  
+      - **Add Option button click**
+      
+        Suppose admin added a new customizable option `Tiny Grass Wheels` for the `Wheels` customizable, Price : 400 Euro, In Stock : No.
+  
+        Admin also selected only applicable products - `Golf Cart`. This is obvious as admin don't want a `Tiny Grass Wheels` customizable option available for `Bicycle's Wheels customization`.
+  
+        User added - `customizable_option : 'Tiny Grass Wheels' for customizable : {id: 3, name: Wheels}, Price: 400 Euros, Stock Status: False, Applicable Products : {id: 3, name: Golf Cart}`
+  
+        - API
+          - Request : POST - /customizable_options
+          - Payload :
+            ```
             {
-                "id": 15,
-                "name": "Tiny Grass Wheels",
-                "customizable_id": 3,
-                "price": 400.0,
-                "stock": false,
-                "created_at": "2024-08-04T15:06:53.704Z",
-                "updated_at": "2024-08-04T15:06:53.704Z"
+              "name": "Tiny Grass Wheels",
+              "price" : "400",
+              "in_stock" : false,
+              "customizable_id" : 3,
+              "product_ids": [3]
             }
-          ```
-        - Following things are persisted in the database
-          - `customizable_options` table
-            | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
-            |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
-            | .. | .....           | .....           | ..    | ..    | .........                   | ......existing entries      |
-            | 15 | Tiny Grass Wheels| 3              | 400.0 | false | 2024-08-04 15:06:53.704276  | 2024-08-04 15:06:53.704276  |
+            ```
+          - Response : 201 Created
+            ```
+              {
+                  "id": 15,
+                  "name": "Tiny Grass Wheels",
+                  "customizable_id": 3,
+                  "price": 400.0,
+                  "stock": false,
+                  "created_at": "2024-08-04T15:06:53.704Z",
+                  "updated_at": "2024-08-04T15:06:53.704Z"
+              }
+            ```
+          - Following things are persisted in the database
+            - `customizable_options` table
+              | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
+              |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
+              | .. | .....           | .....           | ..    | ..    | .........                   | ......existing entries      |
+              | 15 | Tiny Grass Wheels| 3              | 400.0 | false | 2024-08-04 15:06:53.704276  | 2024-08-04 15:06:53.704276  |
+  
+            - `products_customizable_options` table
+              | product_id | customizable_option_id |
+              |------------|-------------------------|
+              | .....      | ...........             |
+              | .....      | .....existing entries   |
+              | 3 //existing          | 9 //existing                       |
+              | 3 //existing          | 13 //existing                      |
+              | 3 //existing         | 14  //existing                    |
+              | 3          | 15                      |
+  
+            - This is how product page UI looks like now
+              Bicycle (Tiny Grass Wheels not available under Wheels customizable options)             |  Golf Cart (Tiny Grass Wheels available under Wheels customizable )
+              :-------------------------:|:-------------------------:
+              ![Screenshot (360)](https://github.com/user-attachments/assets/29c98fa6-971f-4d6b-976e-45a88bad5d22) | ![Screenshot (361)](https://github.com/user-attachments/assets/a098634e-819c-4460-ae40-71619d0152ef)
 
-          - `products_customizable_options` table
-            | product_id | customizable_option_id |
-            |------------|-------------------------|
-            | .....      | ...........             |
-            | .....      | .....existing entries   |
-            | 3 //existing          | 9 //existing                       |
-            | 3 //existing          | 13 //existing                      |
-            | 3 //existing         | 14  //existing                    |
-            | 3          | 15                      |
 
-          - This is how product page UI looks like now
-            Bicycle (Tiny Grass Wheels not available under Wheels customizable options)             |  Golf Cart (Tiny Grass Wheels available under Wheels customizable )
-            :-------------------------:|:-------------------------:
-            ![Screenshot (360)](https://github.com/user-attachments/assets/29c98fa6-971f-4d6b-976e-45a88bad5d22) | ![Screenshot (361)](https://github.com/user-attachments/assets/a098634e-819c-4460-ae40-71619d0152ef)
+  - #### Setting Up Prices
+    Upon clicking on `Modify Customizable Options` from admin home page, following page is loaded where admin can modify a customizable option or define special pricing based on customizable option combinations.
+    - **API** (to drive the UI)
+      - Request : GET - /customizable_options
+      - Response :
+        ```
+          {
+            "products": [
+                {
+                    "id": 1,
+                    "name": "Bicycle"
+                },
+                {
+                    "id": 2,
+                    "name": "Surfboard"
+                },
+                {
+                    "id": 3,
+                    "name": "Golf Cart"
+                }
+            ],
+            "customizables": [
+                {
+                    "id": 1,
+                    "name": "Frame Type"
+                },
+                {
+                    "id": 2,
+                    "name": "Frame Finish"
+                },
+                {
+                    "id": 3,
+                    "name": "Wheels"
+                },
+                {
+                    "id": 4,
+                    "name": "Rim Color"
+                },
+                {
+                    "id": 5,
+                    "name": "Chain"
+                }
+            ],
+            "customizable_options": [
+                {
+                    "id": 1,
+                    "customizable_id": 1,
+                    "name": "Full Suspension",
+                    "price": 300.0,
+                    "stock": true
+                },
+                {
+                    "id": 2,
+                    "customizable_id": 1,
+                    "name": "Diamond",
+                    "price": 150.0,
+                    "stock": true
+                },
+                {
+                    "id": 3,
+                    "customizable_id": 1,
+                    "name": "step-through",
+                    "price": 100.0,
+                    "stock": false
+                },
+                {
+                    "id": 4,
+                    "customizable_id": 2,
+                    "name": "Matte",
+                    "price": 40.0,
+                    "stock": true
+                },
+                {
+                    "id": 5,
+                    "customizable_id": 2,
+                    "name": "Shiny",
+                    "price": 30.0,
+                    "stock": true
+                },
+                {
+                    "id": 6,
+                    "customizable_id": 3,
+                    "name": "Road Wheels",
+                    "price": 100.0,
+                    "stock": true
+                },
+                {
+                    "id": 7,
+                    "customizable_id": 3,
+                    "name": "Mountain Wheels",
+                    "price": 200.0,
+                    "stock": true
+                },
+                {
+                    "id": 8,
+                    "customizable_id": 3,
+                    "name": "Fat Bike Wheels",
+                    "price": 300.0,
+                    "stock": true
+                },
+                {
+                    "id": 9,
+                    "customizable_id": 3,
+                    "name": "Non-Rusty Tiny Wheels",
+                    "price": 120.0,
+                    "stock": true
+                },
+                {
+                    "id": 10,
+                    "customizable_id": 4,
+                    "name": "Red",
+                    "price": 10.0,
+                    "stock": true
+                },
+                {
+                    "id": 11,
+                    "customizable_id": 4,
+                    "name": "Blue",
+                    "price": 20.0,
+                    "stock": true
+                },
+                {
+                    "id": 12,
+                    "customizable_id": 4,
+                    "name": "Black",
+                    "price": 5.0,
+                    "stock": false
+                },
+                {
+                    "id": 13,
+                    "customizable_id": 5,
+                    "name": "Single-speed chain",
+                    "price": 150.0,
+                    "stock": true
+                },
+                {
+                    "id": 14,
+                    "customizable_id": 5,
+                    "name": "8-speed chain",
+                    "price": 400.0,
+                    "stock": true
+                },
+                {
+                    "id": 15,
+                    "customizable_id": 3,
+                    "name": "Tiny Grass Wheels",
+                    "price": 400.0,
+                    "stock": false
+                }
+            ]
+        }
+        ```
+    
+    - **UI**
+      ![image](https://github.com/user-attachments/assets/c1dae955-da69-43fa-9322-c41fba083cf3)
 
+      - **Modify button Click**
+        - UI
+          ![image](https://github.com/user-attachments/assets/8b4a8d00-851a-443f-958b-85f56c1c410e)
+        
+        From this UI, Suppose Admin changed the price of Full Suspension from `300 Euro` to `500 Euro`.
+
+        - API
+          - Request : PATCH - /customizable_options/:id  (/customizable_options/1)
+          - Payload : ` { price : 500 } `
+          - Response : 204 No Content
+          - Following things are persisted in the database
+            - `customizable_options` table
+              | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
+              |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
+              | 1  | Full Suspension | 1               | 300.0 --> 500.00 | true | 2024-08-04 11:22:27.329730  | 2024-08-04 16:09:07.336495  |
             
 
+      - **Add Special Price Button click**
+        - UI
+          ![image](https://github.com/user-attachments/assets/12c9f523-ff5e-4110-a3c3-39a5656e6d33)
 
 
-      
-      
+
+        From this UI, suppose admin added a special price of `60 Euros` for customizable option `Red Rim Color {id: 10}` when other customizable option combinations are - `Diamond Frame Type {id: 2}` and `Shiny Frame Finish {id: 5}`
+     
+          <img src="https://github.com/user-attachments/assets/5aba0983-67d1-4cf1-8b11-45d984c2051a" width="800" height="500">
+
+        - API
+          - Request : POST - /pricing_groups
+          - Payload :
+            ```
+              {
+                "pricing_group_name" : "Red Rim Color Special Price",
+                "customizable_option_id": 10
+                "price": 60,
+                "customizable_option_combinations": [2, 5]
+              }
+            ```
+          - Response : 204 No Content
+
+        - Following things are persisted in the database
+          
+          - `pricing_groups` table
+            | id | name                     | created_at                  | updated_at                  |
+            |----|--------------------------|-----------------------------|-----------------------------|
+            | 3  | Red Rim Color Special Price | 2024-08-04 16:57:03.457318  | 2024-08-04 16:57:03.457318  |
+
+          - `pricing_groups_customizable_options` table
+            | pricing_group_id | customizable_option_id |
+            |------------------|-------------------------|
+            | 3                | 2                       |
+            | 3                | 5                       |
+
+          - `customizable_option_price_by_groups` table
+            | id | customizable_option_id | pricing_group_id | price | created_at                  | updated_at                  |
+            |----|-------------------------|------------------|-------|-----------------------------|-----------------------------|
+            | 3  | 10                      | 3                | 60.00 | 2024-08-04 16:57:03.489330  | 2024-08-04 16:57:03.489330  |
 
 
 
+        - **Lets test this new pricing rule** - `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
+       
+        Notice how the price for `Red Rim Color` is `10 Euros` for the first two customized bicycle cart_items, **but for the third customized bicycle**, the price for `Red Rim Color` is `60 Euros` because the other two combinations are `Diamond Frame Type` and `Shiny Frame Finish`, which means our new pricing rule was applied.
+          
+          ![image](https://github.com/user-attachments/assets/0c271b5e-afb6-43ae-81d1-ed117b2330fd)
+
+
+
+
+
+
+  
 
       
 
