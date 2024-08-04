@@ -208,12 +208,7 @@ Make sure you have Docker installed on your system. You can download and install
       
 - #### The Product Page
   Upon click on individual product from home page, the product page gets loaded. This page has all the info related to available customizables, their customizable_options, stock availability and prohibited combinations.
-  - UI
-    ![image](https://github.com/user-attachments/assets/28a1e785-c89a-4f80-9063-392eedffa3dd)
-    Prohibited Combination (Mountain Wheels only allowed with Full Suspension Frame)             |  Out of stock (Black Rim Color)
-    :-------------------------:|:-------------------------:
-    ![Screenshot (356)](https://github.com/user-attachments/assets/a64f87c3-75a1-4eef-b7ca-7776a11d908f) |  ![Screenshot (357)](https://github.com/user-attachments/assets/f991a129-e080-43af-8685-4fe14412a1c9)
-
+  
   - API
     - Request : GET - /products/:id (/products/1)
     - Response :
@@ -351,6 +346,12 @@ Make sure you have Docker installed on your system. You can download and install
           }
       }
       ```
+  - UI
+    ![image](https://github.com/user-attachments/assets/28a1e785-c89a-4f80-9063-392eedffa3dd)
+    Prohibited Combination (Mountain Wheels only allowed with Full Suspension Frame)             |  Out of stock (Black Rim Color)
+    :-------------------------:|:-------------------------:
+    ![Screenshot (356)](https://github.com/user-attachments/assets/a64f87c3-75a1-4eef-b7ca-7776a11d908f) |  ![Screenshot (357)](https://github.com/user-attachments/assets/f991a129-e080-43af-8685-4fe14412a1c9)
+
 - #### Add to Cart
   Upon making selection for customizables for a product on product page, user clicks on `Add to Cart` button, which adds item to the user's cart. When an item is added to the cart, all the available pricing (including special pricing based on other selected customizable options) are calculated and saved as total with the user's cart in carts table.
 
