@@ -21,15 +21,15 @@ Make sure you have Docker installed on your system. You can download and install
 - to-do
 
 
-### Database Design 
+## Database Design 
 [View in Editor](https://dbdiagram.io/d/factorial-backend-erd-66a654028b4bb5230e8dd8fb)
 ![factorial-backend-erd](https://github.com/user-attachments/assets/4d7f3867-e812-4d2d-9ef7-ae20e5a9bda8)
 
 <hr/>
 
-### Deep Dive in Data Model
+## Deep Dive in Data Model
 
-#### `customers` Table
+### `customers` Table
 - **Meaning**: Represents a customer in the system, with unique contact details.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the customer.
@@ -42,7 +42,7 @@ Make sure you have Docker installed on your system. You can download and install
 - **Associations**:
   - `carts`: One-to-One relationship; a customer can have only one cart.
 
-#### `carts` Table
+### `carts` Table
 - **Meaning**: Represents a shopping cart belonging to a specific customer, tracking the total cost and its items.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the cart.
@@ -54,7 +54,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `customer` (belongs to `customers`).
   - `cart_items`: One-to-many relationship; a cart can contain multiple items.
 
-#### `cart_items` Table
+### `cart_items` Table
 - **Meaning**: Represents an item within a cart, including the product details.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the cart item.
@@ -67,7 +67,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `product` (belongs to `products`).
   - _`cart_items_customizable_options` (join table) : Many-to-many relationship with `customizable_options`._
 
-#### `products` Table
+### `products` Table
 - **Meaning**: Represents a product available for purchase, with a unique name.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the product.
@@ -80,7 +80,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `cart_items`: One-to-many relationship; a product can be part of multiple cart items.
   - _`products_customizable_options` (join table): Many-to-many relationship with `customizable_options`_
   
-#### `customizables` Table
+### `customizables` Table
 - **Meaning**: Represents a category of customizable (e.g., Frame Type, Wheels).
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the customizable.
@@ -92,7 +92,7 @@ Make sure you have Docker installed on your system. You can download and install
 - **Associations**:
   - `customizable_options`: One-to-many relationship; each customizable has multiple options.
 
-#### `customizable_options` Table
+### `customizable_options` Table
 - **Meaning**: Represents a specific option for a customizable, including its price and stock status.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the customizable option.
@@ -110,7 +110,7 @@ Make sure you have Docker installed on your system. You can download and install
   - _`products_customizable_options` (join table): Many-to-many relationship with `products`._
   - _`cart_items_customizable_options` (join table): Many-to-many relationship with `cart_items`._
 
-#### `prohibitions` Table
+### `prohibitions` Table
 - **Meaning**: Defines which combinations of customizable options are prohibited.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the prohibition record.
@@ -126,7 +126,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `customizable_option` (belongs to `customizable_options` as the option whose selection restricts other options).
   - `prohibited_customizable_option` (belongs to `customizable_options` as the option which gets prohibited).
 
-#### `products_customizable_options` JOIN Table
+### `products_customizable_options` JOIN Table
 - **Meaning**: Associates products with their available customizable options.
 - **Fields**:
   - `product_id` (int, FK): References `products.id`; identifies the product.
@@ -137,7 +137,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `product` (belongs to `products`).
   - `customizable_option` (belongs to `customizable_options`).
 
-#### `cart_items_customizable_options` JOIN Table
+### `cart_items_customizable_options` JOIN Table
 - **Meaning**: Manages the customizable options selected for a specific cart item.
 - **Fields**:
   - `cart_item_id` (int, FK): References `cart_items.id`; identifies the cart item.
@@ -148,7 +148,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `cart_item` (belongs to `cart_items`).
   - `customizable_option` (belongs to `customizable_options`).
 
-#### `pricing_groups` Table
+### `pricing_groups` Table
 - **Meaning**: Represents different pricing strategies or groups that can be applied to customizable options.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the pricing group.
@@ -159,7 +159,7 @@ Make sure you have Docker installed on your system. You can download and install
   - _`pricing_groups_customizable_options` (join table): Many-to-many relationship with `customizable_options`._
   - `customizable_option_price_by_group`: One-to-many relationship; a pricing group can be associated with multiple customizable_option with specific prices.
 
-#### `pricing_groups_customizable_options` JOIN Table
+### `pricing_groups_customizable_options` JOIN Table
 - **Meaning**: Associates customizable options with specific pricing groups.
 - **Fields**:
   - `pricing_group_id` (int, FK): References `pricing_groups.id`; identifies the pricing group.
@@ -170,7 +170,7 @@ Make sure you have Docker installed on your system. You can download and install
   - `pricing_group` (belongs to `pricing_groups`).
   - `customizable_option` (belongs to `customizable_options`).
 
-#### `customizable_option_price_by_group` Table
+### `customizable_option_price_by_group` Table
 - **Meaning**: Manages specific prices for customizable options based on the pricing group.
 - **Fields**:
   - `id` (int, PK, auto-increment): Unique identifier for the price record.
@@ -186,11 +186,11 @@ Make sure you have Docker installed on your system. You can download and install
 <br>
 <hr/>
 
-### Description of main user actions
+## Description of main user actions
 
-- #### The Home Page
+- ### The Home Page
   This page shows all the products available for user to purchase.
-  - ##### API
+  - #### API
     - Request : GET - /products
     - Response :
       ```
@@ -207,13 +207,13 @@ Make sure you have Docker installed on your system. You can download and install
           }
       ]
       ```
-  - ##### UI
+  - #### UI
     ![image](https://github.com/user-attachments/assets/568b0482-5d0c-46f8-a5ea-859c69b73abe)
       
-- #### The Product Page
+- ### The Product Page
   Upon click on individual product from home page, the product page gets loaded. This page has all the info related to available customizables, their customizable_options, stock availability and prohibited combinations.
   
-  - ##### API
+  - #### API
     - Request : GET - /products/:id (/products/1)
     - Response :
       ```
@@ -350,19 +350,19 @@ Make sure you have Docker installed on your system. You can download and install
           }
       }
       ```
-  - ##### UI
+  - #### UI
     ![image](https://github.com/user-attachments/assets/28a1e785-c89a-4f80-9063-392eedffa3dd)
     
     Prohibited Combination (Mountain Wheels only allowed with Full Suspension Frame)             |  Out of stock (Black Rim Color)
     :-------------------------:|:-------------------------:
     ![Screenshot (356)](https://github.com/user-attachments/assets/a64f87c3-75a1-4eef-b7ca-7776a11d908f) |  ![Screenshot (357)](https://github.com/user-attachments/assets/f991a129-e080-43af-8685-4fe14412a1c9)
 
-- #### Add to Cart
+- ### Add to Cart
   Upon making selection for customizables for a product on product page, user clicks on `Add to Cart` button, which adds item to the user's cart. When an item is added to the cart, all the available pricing (including special pricing based on other selected customizable options) are calculated and saved as total with the user's cart in carts table.
 
   Eg : Suppose user made following selections for **Bicycle customizable_options** :
   ``` Frame Type :  { id: 1, name: Full Suspension}, Frame Finish : { id: 4, name: Matte} , Wheels : { id: 7, name: Mountain Wheels} , Rim Color : { id: 10, name: Red }, Chain : { id: 13, name: Single-speed chain} ```
-  - ##### API
+  - #### API
     - Request : POST - /carts/add_item
     - Payload :
       ```
@@ -375,7 +375,7 @@ Make sure you have Docker installed on your system. You can download and install
       ```
         { "cart_item_id" : 1}
       ```
-  - ##### Things persisted in database
+  - #### Things persisted in database
     - `carts`
       | id | total | customer_id | created_at                  | updated_at                  |
       |----|-------|-------------|-----------------------------|-----------------------------|
@@ -395,8 +395,8 @@ Make sure you have Docker installed on your system. You can download and install
 
     - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
 
-- #### View Cart
-  - ##### API
+- ### View Cart
+  - #### API
     - Authentication : Uses a JWT token for user info, but to keep things light-weight for now server is simplified with a hardcoded customer_id: 1 for all requests.
     - Request : GET - /carts
     - Response :
@@ -481,7 +481,7 @@ Make sure you have Docker installed on your system. You can download and install
           }
       }
       ```
-  - ##### UI
+  - #### UI
     
     Notice how `Matte Finish` Price is `40 Euros` for `Diamond Frame` and `50 Euros` for `Full Suspension Frame`. The API calculates the cost considering all the pricing (individual as well as the special pricing based on combinations of other selection.) In case of multiple special pricing applicable on a option, the one with the max price is considered so as Marcus is benefitted.
     
@@ -490,16 +490,16 @@ Make sure you have Docker installed on your system. You can download and install
 <br>
 <hr/>
 
-###  The description of the main workflows from the administration part of the website, where Marcus configures the store
+##  The description of the main workflows from the administration part of the website, where Marcus configures the store
    Currently to keep things light-weight, no authentication and authorization is setup. Going forward we can it up, so that only authorized users can access admin portal.
-  - #### Admin Landing Page
-    - ##### UI
+  - ### Admin Landing Page
+    - #### UI
       ![image](https://github.com/user-attachments/assets/9557c25a-a8d5-4e0b-aa19-26a0367a33eb)
 
-  - #### Creation of new product
+  - ### Creation of new product
     Upon clicking on `Add new Product` from admin home page, following page is loaded where admin can add a new product for its store along with what all customizables that can be done on that product.
 
-    - ##### API (to drive the UI)
+    - #### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -638,16 +638,16 @@ Make sure you have Docker installed on your system. You can download and install
             ]
         }
         ```
-    - ##### UI
+    - #### UI
       UI             |  UI Validations
       :-------------------------:|:-------------------------:
       ![image](https://github.com/user-attachments/assets/d98e3d77-def2-489f-871d-92b9e985c666) |  ![image](https://github.com/user-attachments/assets/69cd87f4-b450-43c1-8139-4b2080db87f8)
 
-    - ##### Add Product button click
+    - #### Add Product button click
       
       Suppose admin added a new product `Golf Cart`. And only customizable for these are Wheels and Chains.
       User added - `Golf Cart, allowed customizable_options -  Wheels : { id: 9, name: Non-Rusty Tiny Wheels }, Chain : { id: 13, name: Single-speed chain}, {id: 14, naem: 8-speed chain}`
-      - ###### API
+      - ##### API
         - Request : POST - /products
         - Payload :
           ```
@@ -667,7 +667,7 @@ Make sure you have Docker installed on your system. You can download and install
                 "updated_at": "2024-08-04T13:33:30.002Z"
             }
           ```
-      - ###### Things persisted in the database
+      - ##### Things persisted in the database
         - `products` table
           | id | name       | description              | created_at                  | updated_at                  |
           |----|------------|--------------------------|-----------------------------|-----------------------------|
@@ -687,10 +687,10 @@ Make sure you have Docker installed on your system. You can download and install
         - This is how the Home page UI looks like now -
           ![image](https://github.com/user-attachments/assets/0c659dd5-6c02-40f7-8e4f-c467f2d79c18)
 
-  - #### Addition of a new part choice
+  - ### Addition of a new part choice
     Upon clicking on `Add new Customizable Option` from admin home page, following page is loaded where admin can add a customizable option, along with mapping that to which Product(s) this option should be allowed.
 
-    - ##### API (to drive the UI)
+    - #### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -834,12 +834,12 @@ Make sure you have Docker installed on your system. You can download and install
         }
         ```
   
-    - ##### UI
+    - #### UI
       UI             |  UI Validations
       :-------------------------:|:-------------------------:
       ![image](https://github.com/user-attachments/assets/250693d1-c80a-429c-8f25-f3003971533a) | ![image](https://github.com/user-attachments/assets/8385558f-6f27-4898-9aae-259a410cec25)
   
-    - ##### Add Option button click
+    - #### Add Option button click
     
       Suppose admin added a new customizable option `Tiny Grass Wheels` for the `Wheels` customizable, Price : 400 Euro, In Stock : No.
 
@@ -847,7 +847,7 @@ Make sure you have Docker installed on your system. You can download and install
 
       User added - `customizable_option : 'Tiny Grass Wheels' for customizable : {id: 3, name: Wheels}, Price: 400 Euros, Stock Status: False, Applicable Products : {id: 3, name: Golf Cart}`
 
-      - ###### API
+      - ##### API
         - Request : POST - /customizable_options
         - Payload :
           ```
@@ -871,7 +871,7 @@ Make sure you have Docker installed on your system. You can download and install
                 "updated_at": "2024-08-04T15:06:53.704Z"
             }
           ```
-      - ###### Things persisted in the database
+      - ##### Things persisted in the database
         - `customizable_options` table
           | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
           |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
@@ -894,9 +894,9 @@ Make sure you have Docker installed on your system. You can download and install
           ![Screenshot (360)](https://github.com/user-attachments/assets/29c98fa6-971f-4d6b-976e-45a88bad5d22) | ![Screenshot (361)](https://github.com/user-attachments/assets/a098634e-819c-4460-ae40-71619d0152ef)
 
 
-  - #### Setting Up Prices
+  - ### Setting Up Prices
     Upon clicking on `Modify Customizable Options` from admin home page, following page is loaded where admin can modify a customizable option or define special pricing based on customizable option combinations.
-    - ##### API (to drive the UI)
+    - #### API (to drive the UI)
       - Request : GET - /customizable_options
       - Response :
         ```
@@ -1047,36 +1047,36 @@ Make sure you have Docker installed on your system. You can download and install
         }
         ```
     
-    - ##### UI
+    - #### UI
       ![image](https://github.com/user-attachments/assets/c1dae955-da69-43fa-9322-c41fba083cf3)
 
-    - ##### Modify button Click
-      - ###### UI
+    - #### Modify button Click
+      - ##### UI
         ![image](https://github.com/user-attachments/assets/8b4a8d00-851a-443f-958b-85f56c1c410e)
       
       From this UI, Suppose Admin changed the price of Full Suspension from `300 Euro` to `500 Euro`.
 
-      - ###### API
+      - ##### API
         - Request : PATCH - /customizable_options/:id  (/customizable_options/1)
         - Payload : ` { price : 500 } `
         - Response : 204 No Content
 
-      - ###### Things persisted in the database
+      - ##### Things persisted in the database
         - `customizable_options` table
           | id | name            | customizable_id | price | stock | created_at                  | updated_at                  |
           |----|-----------------|-----------------|-------|-------|-----------------------------|-----------------------------|
           | 1  | Full Suspension | 1               | 300.0 --> 500.00 | true | 2024-08-04 11:22:27.329730  | 2024-08-04 16:09:07.336495  |
             
 
-    - ##### Add Special Price Button click
-      - ###### UI
+    - #### Add Special Price Button click
+      - ##### UI
         ![image](https://github.com/user-attachments/assets/12c9f523-ff5e-4110-a3c3-39a5656e6d33)
 
         From this UI, suppose admin added a special price of `60 Euros` for customizable option `Red Rim Color {id: 10}` when other customizable option combinations are - `Diamond Frame Type {id: 2}` and `Shiny Frame Finish {id: 5}`
    
         <img src="https://github.com/user-attachments/assets/5aba0983-67d1-4cf1-8b11-45d984c2051a" width="800" height="500">
 
-      - ###### API
+      - ##### API
         - Request : POST - /pricing_groups
         - Payload :
           ```
@@ -1089,7 +1089,7 @@ Make sure you have Docker installed on your system. You can download and install
           ```
         - Response : 204 No Content
 
-      - ###### Things persisted in the database
+      - ##### Things persisted in the database
         
         - `pricing_groups` table
           | id | name                     | created_at                  | updated_at                  |
@@ -1109,7 +1109,7 @@ Make sure you have Docker installed on your system. You can download and install
 
 
 
-      - ###### Lets test this new pricing rule
+      - ##### Lets test this new pricing rule
         `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
 
         Notice how the price for `Red Rim Color` is `10 Euros` for the first two customized bicycle cart_items, **but for the third customized bicycle**, the price for `Red Rim Color` is `60 Euros` because the other two combinations are `Diamond Frame Type` and `Shiny Frame Finish`, which means our new pricing rule was applied.
@@ -1125,16 +1125,16 @@ Make sure you have Docker installed on your system. You can download and install
 
       
 
-### Optimisations
+## Optimisations
 to-do
 
-### Configurations
+## Configurations
 to-do
 
-### Observations, Assumptions and Points
+## Observations, Assumptions and Points
 to-do
 
-### Suggestions and Future Iterations
+## Suggestions and Future Iterations
 to-do audit_trails
 
-### Testing
+## Testing
