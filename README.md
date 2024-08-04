@@ -182,6 +182,306 @@ Make sure you have Docker installed on your system. You can download and install
   - `pricing_group` (belongs to `pricing_groups`).
 
 
+### Description of main user actions
+
+- #### The Home Page
+  This page shows all the products available for user to purchase.
+  - API
+    - Request : GET - /products
+    - Response :
+      ```
+      [
+          {
+              "id": 1,
+              "name": "Bicycle",
+              "description": "Customize your bicycle"
+          },
+          {
+              "id": 2,
+              "name": "Surfboard",
+              "description": "Customize your surfboard"
+          }
+      ]
+      ```
+  - UI
+    ![image](https://github.com/user-attachments/assets/568b0482-5d0c-46f8-a5ea-859c69b73abe)
+      
+- #### The Product Page
+  Upon click on individual product from home page, the product page gets loaded. This page has all the info related to available customizables, their customizable_options, stock availability and prohibited combinations.
+  - UI
+    ![image](https://github.com/user-attachments/assets/28a1e785-c89a-4f80-9063-392eedffa3dd)
+    Prohibited Combination (Mountain Wheels only allowed with Full Suspension Frame)             |  Out of stock (Black Rim Color)
+    :-------------------------:|:-------------------------:
+    ![Screenshot (356)](https://github.com/user-attachments/assets/a64f87c3-75a1-4eef-b7ca-7776a11d908f) |  ![Screenshot (357)](https://github.com/user-attachments/assets/f991a129-e080-43af-8685-4fe14412a1c9)
+
+  - API
+    - Request : GET - /products/:id (/products/1)
+    - Response :
+      ```
+      {
+          "product": {
+              "id": 1,
+              "name": "Bicycle",
+              "description": "Customize your bicycle"
+          },
+          "customizables": [
+              {
+                  "id": 1,
+                  "name": "Frame Type"
+              },
+              {
+                  "id": 2,
+                  "name": "Frame Finish"
+              },
+              {
+                  "id": 3,
+                  "name": "Wheels"
+              },
+              {
+                  "id": 4,
+                  "name": "Rim Color"
+              },
+              {
+                  "id": 5,
+                  "name": "Chain"
+              }
+          ],
+          "customizable_options": {
+              "Frame Type": [
+                  {
+                      "id": 1,
+                      "name": "Full Suspension",
+                      "price": 300.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  },
+                  {
+                      "id": 2,
+                      "name": "Diamond",
+                      "price": 150.0,
+                      "stock": true,
+                      "prohibited_combinations": [7]
+                  },
+                  {
+                      "id": 3,
+                      "name": "step-through",
+                      "price": 100.0,
+                      "stock": true,
+                      "prohibited_combinations": [7]
+                  }
+              ],
+              "Frame Finish": [
+                  {
+                      "id": 4,
+                      "name": "Matte",
+                      "price": 40.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  },
+                  {
+                      "id": 5,
+                      "name": "Shiny",
+                      "price": 30.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  }
+              ],
+              "Wheels": [
+                  {
+                      "id": 6,
+                      "name": "Road Wheels",
+                      "price": 100.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  },
+                  {
+                      "id": 7,
+                      "name": "Mountain Wheels",
+                      "price": 200.0,
+                      "stock": true,
+                      "prohibited_combinations": [2,3]
+                  },
+                  {
+                      "id": 8,
+                      "name": "Fat Bike Wheels",
+                      "price": 300.0,
+                      "stock": true,
+                      "prohibited_combinations": [10]
+                  }
+              ],
+              "Rim Color": [
+                  {
+                      "id": 10,
+                      "name": "Red",
+                      "price": 10.0,
+                      "stock": true,
+                      "prohibited_combinations": [8]
+                  },
+                  {
+                      "id": 11,
+                      "name": "Blue",
+                      "price": 20.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  },
+                  {
+                      "id": 12,
+                      "name": "Black",
+                      "price": 5.0,
+                      "stock": false,
+                      "prohibited_combinations": []
+                  }
+              ],
+              "Chain": [
+                  {
+                      "id": 13,
+                      "name": "Single-speed chain",
+                      "price": 150.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  },
+                  {
+                      "id": 14,
+                      "name": "8-speed chain",
+                      "price": 400.0,
+                      "stock": true,
+                      "prohibited_combinations": []
+                  }
+              ]
+          }
+      }
+      ```
+- #### Add to Cart
+  Upon making selection for customizables for a product on product page, user clicks on `Add to Cart` button, which adds item to the user's cart. When an item is added to the cart, all the available pricing (including special pricing based on other selected customizable options) are calculated and saved as total with the user's cart in carts table.
+
+  Eg : Suppose user made following selections for **Bicycle customizable_options** :
+  ``` Frame Type :  { id: 1, name: Full Suspension}, Frame Finish : { id: 4, name: Matte} , Wheels : { id: 7, name: Mountain Wheels} , Rim Color : { id: 10, name: Red }, Chain : { id: 13, name: Single-speed chain} ```
+  - API
+    - Request : POST - /carts/add_item
+    - Payload :
+      ```
+        {
+          "product_id" : 1,
+          "customizable_options" : [1,4,7,10,13]
+        }
+      ```
+    - Response : 201 Created
+      ```
+        { "cart_item_id" : 1}
+      ```
+    - Following things are persisted in the database
+      - `carts`
+        | id | total | customer_id | created_at                  | updated_at                  |
+        |----|-------|-------------|-----------------------------|-----------------------------|
+        | 1  | 710.0 | 1           | 2024-08-04 11:50:54.293513  | 2024-08-04 11:50:54.514518  |
+      - `cart_items`
+        | id | cart_id | product_id | created_at                  | updated_at                  |
+        |----|---------|------------|-----------------------------|-----------------------------|
+        | 1  | 1       | 1          | 2024-08-04 11:50:54.396087  | 2024-08-04 11:50:54.396087  |
+      - `cart_items_customizable_options`
+        | cart_item_id | customizable_option_id |
+        |--------------|------------------------|
+        | 1            | 1                      |
+        | 1            | 4                      |
+        | 1            | 7                      |
+        | 1            | 10                     |
+        | 1            | 13                     |
+
+      - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
+
+- #### View Cart
+  - API
+    - Authentication : Uses a JWT token for user info, but to keep things light-weight for now server is simplified with a hardcoded customer_id: 1 for all requests.
+    - Request : GET - /carts
+    - Response :
+      ```
+        {
+          "cart": {
+              "cart_items": [
+                  {
+                      "id": 1,
+                      "product": "Bicycle",
+                      "customizable_options": [
+                          {
+                              "id": 1,
+                              "name": "Full Suspension",
+                              "price": 300.0,
+                              "customizable_name": "Frame Type"
+                          },
+                          {
+                              "id": 4,
+                              "name": "Matte",
+                              "price": 50.0,
+                              "customizable_name": "Frame Finish"
+                          },
+                          {
+                              "id": 7,
+                              "name": "Mountain Wheels",
+                              "price": 200.0,
+                              "customizable_name": "Wheels"
+                          },
+                          {
+                              "id": 10,
+                              "name": "Red",
+                              "price": 10.0,
+                              "customizable_name": "Rim Color"
+                          },
+                          {
+                              "id": 13,
+                              "name": "Single-speed chain",
+                              "price": 150.0,
+                              "customizable_name": "Chain"
+                          }
+                      ]
+                  },
+                  {
+                      "id": 2,
+                      "product": "Bicycle",
+                      "customizable_options": [
+                          {
+                              "id": 2,
+                              "name": "Diamond",
+                              "price": 150.0,
+                              "customizable_name": "Frame Type"
+                          },
+                          {
+                              "id": 4,
+                              "name": "Matte",
+                              "price": 40.0,
+                              "customizable_name": "Frame Finish"
+                          },
+                          {
+                              "id": 6,
+                              "name": "Road Wheels",
+                              "price": 100.0,
+                              "customizable_name": "Wheels"
+                          },
+                          {
+                              "id": 10,
+                              "name": "Red",
+                              "price": 10.0,
+                              "customizable_name": "Rim Color"
+                          },
+                          {
+                              "id": 13,
+                              "name": "Single-speed chain",
+                              "price": 150.0,
+                              "customizable_name": "Chain"
+                          }
+                      ]
+                  }
+              ],
+              "total": 1160.0
+          }
+      }
+      ```
+  - UI
+    
+    Notice how `Matte Finish` Price is `40 Euros` for `Diamond Frame` and `50 Euros` for `Full Suspension Frame`. The API calculates the cost considering all the pricing (inidivual as well as the special pricing based on combinations of other selection.) In case of multiple special pricing applicable on a option, the one with the max price is considered so as Marcus is benefitted.
+    
+    ![image](https://github.com/user-attachments/assets/c051a298-edb4-4412-9bdd-5c6f36839036)
+
+      
 
 ### Optimisations
 to-do
