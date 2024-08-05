@@ -9,12 +9,18 @@ Make sure you have Docker installed on your system. You can download and install
 ### Setting up the Application / Deploy using docker images
 - Pull the docker image:
   ```
-  to-do
+  docker pull kunaldhyani026/factorial-backend-image
   ```
 - Run the container:
   ```
-  to-do
+  docker run -p 4000:4000 --name factorial-backend-container -d kunaldhyani026/factorial-backend-image
   ```
+- APIs accessible at `http://localhost:4000/` [Use postman or cURL to hit JSON API requests] or use [Biycle Frontend App](https://github.com/kunaldhyani026/factorial-frontend)
+  #### Test Pipeline
+  - To run the specs:
+     - Login to container: `docker exec -it factorial-backend-container bash`
+     - Run: `rspec`
+
 
 ### Important Note
 This backend rails API service is developed to work with [Bicycle Shop Frontend Repository](https://github.com/kunaldhyani026/factorial-frontend)
