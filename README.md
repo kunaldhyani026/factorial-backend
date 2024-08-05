@@ -1,5 +1,72 @@
 # Bicycle Shop Backend
 
+## Table of Contents
+   - [Problem Statement](#problem-statement)
+   - [Running the Application](#running-the-application)
+     - [Prerequisites](#prerequisites)
+     - [Setting up the Application / Deploy using Docker Images](#setting-up-the-application--deploy-using-docker-images)
+     - [Important Note](#important-note)
+   - [Database Design](#database-design)
+   - [Deep Dive in Data Model](#deep-dive-in-data-model)
+     - [customers Table](#customers-table)
+     - [carts Table](#carts-table)
+     - [cart_items Table](#cart_items-table)
+     - [products Table](#products-table)
+     - [customizables Table](#customizables-table)
+     - [customizable_options Table](#customizable_options-table)
+     - [prohibitions Table](#prohibitions-table)
+     - [products_customizable_options JOIN Table](#products_customizable_options-join-table)
+     - [cart_items_customizable_options JOIN Table](#cart_items_customizable_options-join-table)
+     - [pricing_groups Table](#pricing_groups-table)
+     - [pricing_groups_customizable_options JOIN Table](#pricing_groups_customizable_options-join-table)
+     - [customizable_option_price_by_group Table](#customizable_option_price_by_group-table)
+   - [Description of Main User Actions](#description-of-main-user-actions)
+     - [The Home Page](#the-home-page)
+       - [API](#api)
+       - [UI](#ui)
+     - [The Product Page](#the-product-page)
+       - [API](#api-1)
+       - [UI](#ui-1)
+     - [Add to Cart](#add-to-cart)
+       - [API](#api-2)
+       - [Things Persisted in Database](#things-persisted-in-database)
+     - [View Cart](#view-cart)
+       - [API](#api-3)
+       - [UI](#ui-2)
+   - [The Description of the Main Workflows from the Administration Part of the Website](#the-description-of-the-main-workflows-from-the-administration-part-of-the-website---where-marcus-configures-the-store)
+     - [Admin Landing Page](#admin-landing-page)
+       - [UI](#ui-3)
+     - [Creation of New Product](#creation-of-new-product)
+       - [API (to drive the UI)](#api-to-drive-the-ui)
+       - [UI](#ui-4)
+       - [Add Product Button Click](#add-product-button-click)
+         - [API](#api-4)
+         - [Things Persisted in Database](#things-persisted-in-the-database)
+     - [Addition of a New Part Choice](#addition-of-a-new-part-choice)
+       - [API (to drive the UI)](#api-to-drive-the-ui-1)
+       - [UI](#ui-5)
+       - [Add Option Button Click](#add-option-button-click)
+         - [API](#api-5)
+         - [Things Persisted in Database](#things-persisted-in-the-database-1)
+     - [Setting Up Prices](#setting-up-prices)
+       - [API (to drive the UI)](#api-to-drive-the-ui-2)
+       - [UI](#ui-6)
+       - [Modify Button Click](#modify-button-click)
+         - [UI](#ui-7)
+         - [API](#api-6)
+         - [Things Persisted in Database](#things-persisted-in-the-database-2)
+       - [Add Special Price Button Click](#add-special-price-button-click)
+         - [UI](#ui-8)
+         - [API](#api-7)
+         - [Things Persisted in Database](#things-persisted-in-the-database-3)
+         - [Test this New Pricing Rule](#test-this-new-pricing-rule)
+   - [Ruby on Rails - Key Classes](#ruby-on-rails---key-classes)
+     - [Models](#models)
+     - [Controllers](#controllers)
+  - [Observations, Assumptions and Points for Future Iterations](#observations---assumptions---points-for-future-iterations)
+  - [Testing](#testing)   
+
+
 ## Problem Statement
 
 [Bicycle Shop (Marcus Store) - Description](https://gist.github.com/kunaldhyani026/e3fc97f4d78da08d75533bf8f48ebba5)
@@ -9,12 +76,18 @@ Make sure you have Docker installed on your system. You can download and install
 ### Setting up the Application / Deploy using docker images
 - Pull the docker image:
   ```
-  to-do
+  docker pull kunaldhyani026/factorial-backend-image
   ```
 - Run the container:
   ```
-  to-do
+  docker run -p 4000:4000 --name factorial-backend-container -d kunaldhyani026/factorial-backend-image
   ```
+- APIs accessible at `http://localhost:4000/` [Use postman or cURL to hit JSON API requests] or use [Biycle Frontend App](https://github.com/kunaldhyani026/factorial-frontend)
+  #### Test Pipeline
+  - To run the specs:
+     - Login to container: `docker exec -it factorial-backend-container bash`
+     - Run: `rspec`
+
 
 ### Important Note
 This backend rails API service is developed to work with [Bicycle Shop Frontend Repository](https://github.com/kunaldhyani026/factorial-frontend)
@@ -393,6 +466,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
       | 1            | 13                     |
 
     - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
+    - This data model - i.e., cart_items refer to a product_id and cart_items_customizable_options table storing customizable options for a cart_item , allows customer to add multiple products (eg: Multiple Bicycles) with different customization options in their cart.
 
 - ### View Cart
   - #### API
@@ -489,7 +563,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 <br>
 <hr/>
 
-##  The description of the main workflows from the administration part of the website, where Marcus configures the store
+##  The description of the main workflows from the administration part of the website - where Marcus configures the store
    Currently to keep things light-weight, no authentication and authorization is setup. Going forward we can it up, so that only authorized users can access admin portal.
   - ### Admin Landing Page
     - #### UI
@@ -1108,7 +1182,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 
 
 
-      - ##### Lets test this new pricing rule
+      - ##### Test this new pricing rule
         `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
 
         Notice how the price for `Red Rim Color` is `10 Euros` for the first two customized bicycle cart_items, **but for the third customized bicycle**, the price for `Red Rim Color` is `60 Euros` because the other two combinations are `Diamond Frame Type` and `Shiny Frame Finish`, which means our new pricing rule was applied.
@@ -1141,7 +1215,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 
     Responsible for managing apis for special pricing related actions (create special pricing for an option based on option combinations)
     
-## Observations, Assumptions, Points for future iterations
+## Observations - Assumptions - Points for future iterations
   To keep things light-weight and simple for now, following points are kept to be picked in future iterations - 
   - Authentication and authorization needs to be added. We can add jwt token authentication for all the APIs. Server will decode the token and get the user info accessing the website. User Authorization layer can also be added to sepcify access-levels.
   - Params Validation needs to be added. We will definitely add params validation for all API requests to enhance security of the application.
