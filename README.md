@@ -15,10 +15,9 @@ Make sure you have Docker installed on your system. You can download and install
   ```
   to-do
   ```
-- to-do
 
-### Test Pipeline
-- to-do
+### Important Note
+This backend rails API service is developed to work with [Bicycle Shop Frontend Repository](https://github.com/kunaldhyani026/factorial-frontend)
 
 
 ## Database Design 
