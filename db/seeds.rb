@@ -6,15 +6,19 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-# Customer.destroy_all
-# Product.destroy_all
+# ActiveRecord::Base.connection.execute("DELETE FROM prohibitions")
+# ActiveRecord::Base.connection.execute("DELETE FROM customizable_options_products")
+# ActiveRecord::Base.connection.execute("DELETE FROM customizable_options_pricing_groups")
+# ActiveRecord::Base.connection.execute("DELETE FROM cart_items_customizable_options")
 #
-# Customizable.destroy_all
-# CustomizableOption.destroy_all
-# PricingGroup.destroy_all
 # CustomizableOptionPriceByGroup.destroy_all
-# Cart.destroy_all
+# PricingGroup.destroy_all
 # CartItem.destroy_all
+# Cart.destroy_all
+# Customer.destroy_all
+# CustomizableOption.destroy_all
+# Product.destroy_all
+# Customizable.destroy_all
 
 # customers
 kunal = Customer.find_or_create_by(name: 'Kunal Dhyani', email: 'kunaldhyani@email.com')
