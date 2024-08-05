@@ -22,7 +22,7 @@
        - [customizable_option_price_by_group Table](#customizable_option_price_by_group-table)
    - [Description of Main User Actions](#description-of-main-user-actions)
      - [The Home Page](#the-home-page)
-       - [API](#api-1)
+       - [API](#API-1)
        - [UI](#ui-1)
      - [The Product Page](#the-product-page)
        - [API](#api-2)
