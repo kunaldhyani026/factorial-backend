@@ -7,19 +7,19 @@
      - [Setting up the Application / Deploy using Docker Images](#setting-up-the-application--deploy-using-docker-images)
      - [Important Note](#important-note)
    - [Database Design](#database-design)
-     - [Deep Dive in Data Model](#deep-dive-in-data-model)
-       - [customers Table](#customers-table)
-       - [carts Table](#carts-table)
-       - [cart_items Table](#cart_items-table)
-       - [products Table](#products-table)
-       - [customizables Table](#customizables-table)
-       - [customizable_options Table](#customizable_options-table)
-       - [prohibitions Table](#prohibitions-table)
-       - [products_customizable_options JOIN Table](#products_customizable_options-join-table)
-       - [cart_items_customizable_options JOIN Table](#cart_items_customizable_options-join-table)
-       - [pricing_groups Table](#pricing_groups-table)
-       - [pricing_groups_customizable_options JOIN Table](#pricing_groups_customizable_options-join-table)
-       - [customizable_option_price_by_group Table](#customizable_option_price_by_group-table)
+   - [Deep Dive in Data Model](#deep-dive-in-data-model)
+     - [customers Table](#customers-table)
+     - [carts Table](#carts-table)
+     - [cart_items Table](#cart_items-table)
+     - [products Table](#products-table)
+     - [customizables Table](#customizables-table)
+     - [customizable_options Table](#customizable_options-table)
+     - [prohibitions Table](#prohibitions-table)
+     - [products_customizable_options JOIN Table](#products_customizable_options-join-table)
+     - [cart_items_customizable_options JOIN Table](#cart_items_customizable_options-join-table)
+     - [pricing_groups Table](#pricing_groups-table)
+     - [pricing_groups_customizable_options JOIN Table](#pricing_groups_customizable_options-join-table)
+     - [customizable_option_price_by_group Table](#customizable_option_price_by_group-table)
    - [Description of Main User Actions](#description-of-main-user-actions)
      - [The Home Page](#the-home-page)
        - [API](#api)
@@ -60,11 +60,11 @@
          - [API](#api-7)
          - [Things Persisted in Database](#things-persisted-in-database-4)
          - [Let's Try New Pricing Rule](#lets-try-new-pricing-rule)
-   - Ruby on Rails - Key Classes
-     - Models
-     - Controllers
-  - Observations, Assumptions and Points for Future Iterations
-  - Testing   
+   - [Ruby on Rails - Key Classes](#ruby-on-rails-key-classes)
+     - [Models](#models)
+     - [Controllers](#controllers)
+  - [Observations, Assumptions and Points for Future Iterations](#observations,-assumptions-and-points-for-future-iterations)
+  - [Testing](#testing)   
 
 
 ## Problem Statement
