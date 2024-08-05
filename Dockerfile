@@ -18,6 +18,9 @@ RUN bundle install
 # Copy the rest of the application code into the container
 COPY . .
 
+# Load seeds.rb, Set up developement and test database
+RUN bundle exec rake db:reset
+
 # Expose port 4000 to the outside world
 EXPOSE 4000
 
