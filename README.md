@@ -209,6 +209,8 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
   - `product` (belongs to `products`).
   - `customizable_option` (belongs to `customizable_options`).
 
+`products` are mapped with `customizable_options` **NOT** `customizables` because a customizable say - `Wheels` can have different types of wheels say `(Road Wheels, Tiny grass wheels)` and all of them won't be suitable for all kind of products. A Bike can't have Tiny Grass Wheels while a Golf Cart can. So we are not mapping products with customizables, so that all wheels do not become available for customization for a product, instead `mapping of products and customizable_options is done`.
+
 ### `cart_items_customizable_options` JOIN Table
 - **Meaning**: Manages the customizable options selected for a specific cart item.
 - **Fields**:
