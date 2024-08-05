@@ -399,6 +399,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
       | 1            | 13                     |
 
     - Every time an item is added to the cart, the cart's total gets updated accordingly. The total price calculation takes care of any special price (such as Finish Matte will cost higher for Full Suspension frame).
+    - This data model - i.e., cart_items refer to a product_id and cart_items_customizable_options table storing customizable options for a cart_item , allows customer to add multiple products (eg: Multiple Bicycles) with different customization options in their cart.
 
 - ### View Cart
   - #### API
