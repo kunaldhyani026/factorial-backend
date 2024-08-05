@@ -33,7 +33,7 @@
      - [View Cart](#view-cart)
        - [API](#api-3)
        - [UI](#ui-2)
-   - [The Description of the Main Workflows from the Administration Part of the Website](#the-description-of-the-main-workflows-from-the-administration-part-of-the-website)
+   - [The Description of the Main Workflows from the Administration Part of the Website](#the-description-of-the-main-workflows-from-the-administration-part-of-the-website---where-marcus-configures-the-store)
      - [Admin Landing Page](#admin-landing-page)
        - [UI](#ui-3)
      - [Creation of New Product](#creation-of-new-product)
@@ -41,29 +41,29 @@
        - [UI](#ui-4)
        - [Add Product Button Click](#add-product-button-click)
          - [API](#api-4)
-         - [Things Persisted in Database](#things-persisted-in-database-1)
+         - [Things Persisted in Database](#things-persisted-in-the-database)
      - [Addition of a New Part Choice](#addition-of-a-new-part-choice)
        - [API (to drive the UI)](#api-to-drive-the-ui-1)
        - [UI](#ui-5)
        - [Add Option Button Click](#add-option-button-click)
          - [API](#api-5)
-         - [Things Persisted in Database](#things-persisted-in-database-2)
+         - [Things Persisted in Database](#things-persisted-in-the-database-1)
      - [Setting Up Prices](#setting-up-prices)
        - [API (to drive the UI)](#api-to-drive-the-ui-2)
        - [UI](#ui-6)
        - [Modify Button Click](#modify-button-click)
          - [UI](#ui-7)
          - [API](#api-6)
-         - [Things Persisted in Database](#things-persisted-in-database-3)
+         - [Things Persisted in Database](#things-persisted-in-the-database-2)
        - [Add Special Price Button Click](#add-special-price-button-click)
          - [UI](#ui-8)
          - [API](#api-7)
-         - [Things Persisted in Database](#things-persisted-in-database-4)
-         - [Let's Try New Pricing Rule](#lets-try-new-pricing-rule)
-   - [Ruby on Rails - Key Classes](#ruby-on-rails-key-classes)
+         - [Things Persisted in Database](#things-persisted-in-the-database-3)
+         - [Test this New Pricing Rule](#test-this-new-pricing-rule)
+   - [Ruby on Rails - Key Classes](#ruby-on-rails---key-classes)
      - [Models](#models)
      - [Controllers](#controllers)
-  - [Observations, Assumptions and Points for Future Iterations](#observations,-assumptions-and-points-for-future-iterations)
+  - [Observations, Assumptions and Points for Future Iterations](#observations---assumptions---points-for-future-iterations)
   - [Testing](#testing)   
 
 
@@ -563,7 +563,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 <br>
 <hr/>
 
-##  The description of the main workflows from the administration part of the website, where Marcus configures the store
+##  The description of the main workflows from the administration part of the website - where Marcus configures the store
    Currently to keep things light-weight, no authentication and authorization is setup. Going forward we can it up, so that only authorized users can access admin portal.
   - ### Admin Landing Page
     - #### UI
@@ -1182,7 +1182,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 
 
 
-      - ##### Lets test this new pricing rule
+      - ##### Test this new pricing rule
         `Lets add a Bicycle to cart with Diamond Frame, Shiny Finish, Red Rim Color. Lets check the carts UI to find out what is Red Rim Color Pricing applied.`
 
         Notice how the price for `Red Rim Color` is `10 Euros` for the first two customized bicycle cart_items, **but for the third customized bicycle**, the price for `Red Rim Color` is `60 Euros` because the other two combinations are `Diamond Frame Type` and `Shiny Frame Finish`, which means our new pricing rule was applied.
@@ -1215,7 +1215,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
 
     Responsible for managing apis for special pricing related actions (create special pricing for an option based on option combinations)
     
-## Observations, Assumptions, Points for future iterations
+## Observations - Assumptions - Points for future iterations
   To keep things light-weight and simple for now, following points are kept to be picked in future iterations - 
   - Authentication and authorization needs to be added. We can add jwt token authentication for all the APIs. Server will decode the token and get the user info accessing the website. User Authorization layer can also be added to sepcify access-levels.
   - Params Validation needs to be added. We will definitely add params validation for all API requests to enhance security of the application.
