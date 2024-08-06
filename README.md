@@ -1225,6 +1225,7 @@ This backend rails API service is developed to work with [Bicycle Shop Frontend 
   - RSpec performance consideration : Currently due to limited and light weight application, we have used seeds.rb file for test data setup. Loading seeds for each spec file run may slow down our tests. Going forward For larger test suites, we can consider using specific data factories or fixtures or created_stubbed for more efficient tests.
   - More admin functionalities such as adding new customizable category can be added in future iterations.
   - Audit trails needs to be maintained. In future iterations, we will definitely maintain audit_trails to keep the track of user/admin actions , especially with admin write operations.
+  - jbuilder is used for building json apis.
   - Robust error handling will be added in APIs, so user is notified with appropriate error message for different kinds of backend errors (4xx, 5xx, etc).
 
 ## Testing
